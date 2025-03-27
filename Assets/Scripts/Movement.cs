@@ -16,21 +16,27 @@ public class PlayerController : MonoBehaviour
     public Transform attackPointDown;
     public LayerMask opponentLayer;
     public Image healthBar;
+    public int playerID; // Assign 1 or 2 in Unity Inspector
 
     private int currentHealth;
     private Rigidbody2D rb;
     private bool isFacingRight = true;
+    private ScoreManager scoreManager;
+    private Vector3 startPosition;
 
     [SerializeField] KeyCode jumpKey;
     [SerializeField] KeyCode leftKey;
     [SerializeField] KeyCode rightKey;
     [SerializeField] KeyCode attackKey;
     [SerializeField] KeyCode downKey;
+    [SerializeField] KeyCode upKey;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
+        scoreManager = FindObjectOfType<ScoreManager>();
+        startPosition = transform.position;
         UpdateHealthBar();
     }
 
@@ -87,7 +93,7 @@ public class PlayerController : MonoBehaviour
     private Transform GetActiveAttackPoint()
     {
         if (Input.GetKey(downKey)) return attackPointDown;
-        if (!IsGrounded()) return attackPointUp;
+        if (Input.GetKey(upKey)) return attackPointUp;
         return isFacingRight ? attackPointRight : attackPointLeft;
     }
 
@@ -104,7 +110,19 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         Debug.Log(gameObject.name + " has been defeated!");
-        gameObject.SetActive(false); // Deactivate the player on death
+        if (scoreManager != null)
+        {
+            scoreManager.AwardPoint(playerID);
+        }
+        Respawn();
+    }
+
+    private void Respawn()
+    {
+        currentHealth = maxHealth;
+        UpdateHealthBar();
+        transform.position = startPosition;
+        gameObject.SetActive(true);
     }
 
     private void UpdateHealthBar()
