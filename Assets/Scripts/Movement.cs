@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask opponentLayer;
     public Image healthBar;
     public int playerID; // Assign 1 or 2 in Unity Inspector
+    public SpriteRenderer spriteToFlip; // Assign the specific sprite in Unity Inspector
 
     private int currentHealth;
     private Rigidbody2D rb;
@@ -51,18 +52,34 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(leftKey))
         {
             transform.position += Vector3.left * speed * Time.deltaTime;
+            if (isFacingRight)
+            {
+                Flip();
+            }
             isFacingRight = false;
         }
 
         if (Input.GetKey(rightKey))
         {
             transform.position += Vector3.right * speed * Time.deltaTime;
+            if (!isFacingRight)
+            {
+                Flip();
+            }
             isFacingRight = true;
         }
 
         if (Input.GetKeyDown(jumpKey) && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+    }
+
+    private void Flip()
+    {
+        if (spriteToFlip != null)
+        {
+            spriteToFlip.flipX = !spriteToFlip.flipX;
         }
     }
 
