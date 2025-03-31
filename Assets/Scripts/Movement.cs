@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public Image healthBar;
     public int playerID; // Assign 1 or 2 in Unity Inspector
     public SpriteRenderer spriteToFlip; // Assign the specific sprite in Unity Inspector
+    public Animator animator; // Reference to the Animator component
 
     private int currentHealth;
     private Rigidbody2D rb;
@@ -49,6 +50,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
+        bool isMoving = false;
+
         if (Input.GetKey(leftKey))
         {
             transform.position += Vector3.left * speed * Time.deltaTime;
@@ -57,6 +60,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
             }
             isFacingRight = false;
+            isMoving = true;
         }
 
         if (Input.GetKey(rightKey))
@@ -67,11 +71,17 @@ public class PlayerController : MonoBehaviour
                 Flip();
             }
             isFacingRight = true;
+            isMoving = true;
         }
 
         if (Input.GetKeyDown(jumpKey) && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+
+        if (animator != null)
+        {
+            animator.SetBool("run", isMoving);
         }
     }
 
