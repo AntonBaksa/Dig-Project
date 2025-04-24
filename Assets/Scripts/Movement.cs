@@ -26,12 +26,13 @@ public class PlayerController : MonoBehaviour
     private ScoreManager scoreManager;
     private Vector3 startPosition;
 
-    [SerializeField] KeyCode jumpKey;
-    [SerializeField] KeyCode leftKey;
-    [SerializeField] KeyCode rightKey;
-    [SerializeField] KeyCode attackKey;
-    [SerializeField] KeyCode downKey;
-    [SerializeField] KeyCode upKey;
+    private KeyCode jumpKey;
+    private KeyCode leftKey;
+    private KeyCode rightKey;
+    private KeyCode attackKey;
+    private KeyCode downKey;
+    private KeyCode upKey;
+
 
     void Start()
     {
@@ -40,6 +41,29 @@ public class PlayerController : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
         startPosition = transform.position;
         UpdateHealthBar();
+        SetPlayerControls(); // <- Här sätter vi kontrollerna
+
+    }
+    private void SetPlayerControls()
+    {
+        if (playerID == 1)
+        {
+            leftKey = KeyCode.A;
+            rightKey = KeyCode.D;
+            jumpKey = KeyCode.W;
+            downKey = KeyCode.S;
+            upKey = KeyCode.W;
+            attackKey = KeyCode.F;
+        }
+        else if (playerID == 2)
+        {
+            leftKey = KeyCode.LeftArrow;
+            rightKey = KeyCode.RightArrow;
+            jumpKey = KeyCode.UpArrow;
+            downKey = KeyCode.DownArrow;
+            upKey = KeyCode.UpArrow;
+            attackKey = KeyCode.RightControl;
+        }
     }
 
     void Update()
