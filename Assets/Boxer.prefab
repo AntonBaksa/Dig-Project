@@ -192,12 +192,6 @@ MonoBehaviour:
   playerID: 0
   spriteToFlip: {fileID: 3287543260457159580}
   animator: {fileID: 0}
-  jumpKey: 273
-  leftKey: 276
-  rightKey: 275
-  attackKey: 305
-  downKey: 0
-  upKey: 0
 --- !u!1 &2391965228929305601
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +411,7 @@ Animator:
   m_GameObject: {fileID: 8644322436999872341}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7080d0c9fd5078f47985e035bff14bbd, type: 2}
+  m_Controller: {fileID: 9100000, guid: ee30cab83f0a06a438d474caab103f1f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
