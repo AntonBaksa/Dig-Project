@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  jumpForce: 10
+  jumpForce: 5
   maxHealth: 100
   attackDamage: 20
   attackRange: 0.2
