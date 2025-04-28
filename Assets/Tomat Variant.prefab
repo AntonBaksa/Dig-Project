@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: jumpForce
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2598734602386202002, guid: 838e6a188514b6b468b8c81cf40b1d95, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.397
+      objectReference: {fileID: 0}
     - target: {fileID: 3287543260457159580, guid: 838e6a188514b6b468b8c81cf40b1d95, type: 3}
       propertyPath: m_Sprite
       value: 

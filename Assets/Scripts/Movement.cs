@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     private KeyCode downKey;
     private KeyCode upKey;
 
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,9 +40,9 @@ public class PlayerController : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
         startPosition = transform.position;
         UpdateHealthBar();
-        SetPlayerControls(); // <- Här sätter vi kontrollerna
-
+        SetPlayerControls();
     }
+
     private void SetPlayerControls()
     {
         if (playerID == 1)
@@ -101,6 +100,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(jumpKey) && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            if (animator != null)
+            {
+                animator.SetBool("jump", true); // Trigger jump animation
+                animator.SetBool("jump", false);
+
+            }
         }
 
         if (animator != null)
@@ -139,6 +144,32 @@ public class PlayerController : MonoBehaviour
                 opponentScript.TakeDamage(attackDamage);
             }
         }
+
+        // Set the attack animations based on direction
+        if (attackPoint == attackPointRight || attackPoint == attackPointLeft)
+        {
+            if (animator != null)
+            {
+                animator.SetBool("attack", true); // Right or Left Attack
+            }
+        }
+        else if (attackPoint == attackPointUp)
+        {
+            if (animator != null)
+            {
+                animator.SetBool("attackUp", true); // Upward Attack
+            }
+        }
+        else if (attackPoint == attackPointDown)
+        {
+            if (animator != null)
+            {
+                animator.SetBool("attackDown", true); // Downward Attack
+            }
+        }
+
+        // Reset attack animations after they are done
+        StartCoroutine(ResetAttackAnimations());
     }
 
     private Transform GetActiveAttackPoint()
@@ -146,6 +177,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(downKey)) return attackPointDown;
         if (Input.GetKey(upKey)) return attackPointUp;
         return isFacingRight ? attackPointRight : attackPointLeft;
+    }
+
+    private IEnumerator ResetAttackAnimations()
+    {
+        // Wait for the animation to play before resetting
+        yield return new WaitForSeconds(0.3f); // Adjust this value depending on your animation length
+
+        if (animator != null)
+        {
+            animator.SetBool("attack", false);
+            animator.SetBool("attackUp", false);
+            animator.SetBool("attackDown", false);
+        }
     }
 
     public void TakeDamage(int damage)
